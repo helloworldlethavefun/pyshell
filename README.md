@@ -14,7 +14,7 @@ Pyshell has some features yet to be implemented but hopefully by the end will in
 
 
 ## As I have noted
-### This is still a work in progress and is not even near done
+### This is still a work in progress and is not even near finished
 ### if you have any suggestions feel free to let me know
 
 
