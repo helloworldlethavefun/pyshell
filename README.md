@@ -9,7 +9,7 @@ Pyshell has some features yet to be implemented but hopefully by the end will in
 - Config files, for customizing
 - custom aliases
 - color coding
-- custom variables
+- custom shell variables
 - and more!
 
 
