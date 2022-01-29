@@ -5,31 +5,37 @@ import os
 import socket
 import pyfiglet
 from termcolor import colored
-import glob
+from termconfig import *
 
 # define variables
 user = os.environ["USER"]
 hostname = socket.gethostname()
-active = True
-header = colored(pyfiglet.figlet_format("PyShell"), 'cyan', attrs=['bold'])
 currentdir = os.getcwd()
+header = termHeader
 
-# define the listdir function
-def listdir():
-    
-    # create list
-    extensionFiles = []
-    
-    for file in os.listdir(currentdir):
-        for file in glob.glob('*.*'):
-            extensionFiles.append(file)
-            print(colored(extensionFiles, 'green'))
+class PermissionError(Exception):
+    pass
 
-# define the change directory function
+class TerminalError(Exception):
+    pass
+
+class Prompt():
+    def __init__(self, header, hostname, user):
+        self.hostname = hostname
+        self.user = user
+        self.header = header
+
+
+# Define the change directory function
 def cd(command):
-    newdir = input(colored('Which directory would you like to go to? ', 'magenta'))
-    os.chdir(newdir)
-
+    # Attempt to change into directory provided by the user
+    try:
+        newdir = input(colored('Which directory would you like to go to? ', 'magenta'))
+        os.chdir(newdir)
+    # Otherwise raise the permission error and ask user if they have permission
+    # to access that specific directory
+    except:
+        raise PermissionError('Something went wrong, are you allowed here user?')
 
 # set the prompt
 def prompt():
@@ -64,12 +70,11 @@ def execCommand(command):
     else:
         os.system(command)
 
-# Start the shell
-print(header)
-prompt()
-
 # while shell is active then run commands
 
 while True:
-    prompt()
-    execCommand(command)
+    try:
+        prompt()
+        execCommand(command)
+    except:
+        raise TerminalError('Something went wrong')
